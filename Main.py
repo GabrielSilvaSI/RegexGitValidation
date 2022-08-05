@@ -13,17 +13,17 @@ def check_author(author):  # verifica se as condições do Autor conferem
 def check_password(password):
     if(not(re.search(r'^[A-F0-9]{2}\.[A-F0-9]{2}\.[A-F0-9]{2}\.[A-F0-9]{2}$', password))):  # verifica se o elemento está fora do formato e se existem caracteres diferentes de [A-F0-9.]
         return False
-    if(re.search(r'[A-F]{2}|1{2}|1{2}|2{2}|3{2}|4{2}|5{2}|6{2}|7{2}|8{2}|9{2}', password)):  # verifica a existência de duas letras ou números duplicados em uma dupla
+    if(re.search(r'[A-F]{2}|0{2}|1{2}|2{2}|3{2}|4{2}|5{2}|6{2}|7{2}|8{2}|9{2}', password)):  # verifica a existência de duas letras ou números duplicados em uma dupla
         return False
     #print("Senha OK")  # debug
     return True  # se nenhuma condição false for encontrada, retorna-se true
 
 def check_ip(ip):
-    numbers = ip.split(".")
     if(not(re.search(r'^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$', ip))):  # verifica se o elemento está fora do formato, se existem caracteres não numéricos e se está no range [0-255]
         return False
-    for i in range(len(numbers)):
-        if(int(numbers[i])>255):
+    numbers = ip.split(".")  # separa os números do ip e armazena numa lista
+    for i in range(len(numbers)):  # percorre a lista de números do ip
+        if(int(numbers[i])>255):  # verifica se os números do ip são maiores que 255
             return False
     #print("IP OK")  # debug
     return True
@@ -34,13 +34,22 @@ def check_email(email):
     #print("Email OK")  # debug
     return True
 
-def check_trans(transaction):
+def check_trans(trans):
+    if(not(re.search(r'^pull$|^push$|^stash$|^fork$|^pop$', trans))):  # verifica se a transação possui alguma string além de pull,push,stash,fork,pop
+        return False
+    #print("Trans OK")  # debug
     return True
 
 def check_repo(repo):
+    if(not(re.search(r'^[_a-z0-9]+$', repo))):  # verifica se a string repositório se encaixa no formato
+        return False
+    #print("Repo OK")  # debug
     return True
 
 def check_hash(hash):
+    if(not(re.search(r'^[0-9a-f]{32}$', hash))):  # verifica se a string repositório se encaixa no formato
+        return False
+    #print("Hash OK")  # debug
     return True
 
 request = input()  # recebe a linha de transação
