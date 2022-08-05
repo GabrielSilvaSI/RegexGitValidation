@@ -52,9 +52,15 @@ def check_hash(hash):
     #print("Hash OK")  # debug
     return True
 
-request = input()  # recebe a linha de transação
-elements = request.split(" ")  # separa a linha de transação em elementos
-if(check_author(elements[0]) and check_password(elements[1]) and check_ip(elements[2]) and check_email(elements[3]) and check_trans(elements[4]) and check_repo(elements[5]) and check_hash(elements[6])):  # verifica se todas as condições dos elementos são True e retorna a condição da transação
-    print("True")
-else:
+try:  # tratamento de erro (caso comandos relacionados ao input resultem em erro)
+    request = input()  # recebe a linha de transação
+    elements = request.split(" ")  # separa a linha de transação em elementos
+    if(len(elements)!=7):  # verifica se a quantidade de elementos 
+        print("False")
+    else:
+        if(check_author(elements[0]) and check_password(elements[1]) and check_ip(elements[2]) and check_email(elements[3]) and check_trans(elements[4]) and check_repo(elements[5]) and check_hash(elements[6])):  # verifica se todas as condições dos elementos são True e retorna a condição da transação
+            print("True")
+        else:
+            print("False")
+except:
     print("False")
